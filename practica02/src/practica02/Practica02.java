@@ -75,12 +75,14 @@ public class Practica02 {
         }
         System.out.println("¿Es simétrica?");
         boolean isSymmetric = true;
+        //uso interesante del break a través de etiqueta/label, para salir del loop exterior
+        label1:
         for (int i = 0; i < mySymmetricTable.length; i++) {
             for (int j = 0; j< mySymmetricTable.length; j++) {
                 if (mySymmetricTable[i][j] != mySymmetricTable[j][i]) {
                     isSymmetric = false;
                     //este break es forzado; TODO: mejorar esta parte del código
-                    break;
+                    break label1;
                 }
             }
         }
@@ -97,6 +99,7 @@ public class Practica02 {
         int[][] myBaseTableA = new int[3][3];
         int[][] myBaseTableB = new int[3][3];
         
+        //genero los valores sólo entre 0 y 9, por simplicidad
         for (int i = 0; i < myBaseTableA.length; i++) {
             for (int j = 0; j < myBaseTableA[i].length; j++) {
                 myBaseTableA[i][j] = (int)(Math.random() * ((9 - 0) + 1));
