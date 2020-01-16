@@ -19,7 +19,7 @@ public class Practica02 {
             System.out.println("  3- sumar dos matrices 3x3");
             System.out.println("  4- crear matriz 7x7 con 1 en diagonal");
             System.out.println("  5- crear matriz 8x6 con 1 en bordes");
-            System.out.println("  6- crear matriz con tamaño según usuario y 0 en bordes");
+            System.out.println("  6- crear matriz con tamaño según usuario y 1 en bordes");
             System.out.println(" ");
             System.out.println("  0- salir");
             userOption = lector.nextInt();
@@ -45,37 +45,50 @@ public class Practica02 {
         }
     }
     
+    //crear matriz con valor de cada celda como suma de su posición fila-columna
     public static void addTablePositions() {
         //start 19:25
-        //genero numeros aleatorios para rellenar la tabla, entre el 0 y el 10
+        //lógica: creo la matriz y la relleno con el agregado de sus posiciones
         int[][] myAddedTable = new int[5][5];
         for (int i = 0; i < myAddedTable.length; i++) {
             for (int j = 0; j< myAddedTable.length; j++) {
                 myAddedTable[i][j] = i + j;
             }
         }
-        System.out.println("Impresión de la tabla " + myAddedTable.length + "x" + myAddedTable.length + ": ");
-        for (int i = 0; i < myAddedTable.length; i++) {
-            System.out.println(Arrays.toString(myAddedTable[i]));
-        }
+        //lamo a método externo para imprimir la matriz
+        printTable(myAddedTable);
         //end 19:33
     }
     
+    //comprobar si una matriz 4x4 es simétrica
     public static void checkTableSymmetry() {
         //start 19:22
+        //genero numeros aleatorios para rellenar la tabla, entre el 0 y el 9 (por simplicidad)
         int[][] mySymmetricTable = new int[4][4];
         for (int i = 0; i < mySymmetricTable.length; i++) {
             for (int j = 0; j< mySymmetricTable.length; j++) {
                 mySymmetricTable[i][j] = (int)(Math.random() * ((9 - 0) + 1));
             }
         }
-        System.out.println("Impresión de la tabla " + mySymmetricTable.length + "x" + mySymmetricTable.length + ": ");
-        for (int i = 0; i < mySymmetricTable.length; i++) {
-            System.out.println(Arrays.toString(mySymmetricTable[i]));
-        }
+        printTable(mySymmetricTable);
         System.out.println("¿Es simétrica?");
         boolean isSymmetric = true;
-        //uso interesante del break a través de etiqueta/label, para salir del loop exterior
+        int iCheck = 0;
+        int jCheck = 0;
+        while (isSymmetric == true && iCheck < mySymmetricTable.length && jCheck < mySymmetricTable[0].length) {
+            if (mySymmetricTable[iCheck][jCheck] != mySymmetricTable[jCheck][iCheck]) {
+                isSymmetric = false;
+            } else {
+                jCheck += 1;
+                if (jCheck == mySymmetricTable[0].length -1 && iCheck != mySymmetricTable.length -1) {
+                    jCheck = 0;
+                    iCheck += 1;
+                }
+            }
+        }
+        
+        /*alternativa: uso interesante del break a través de etiqueta/label, para salir del loop exterior
+        * lo comento porque es un for y no un while, pero es limpio y quiero conservar la idea
         label1:
         for (int i = 0; i < mySymmetricTable.length; i++) {
             for (int j = 0; j< mySymmetricTable.length; j++) {
@@ -85,7 +98,8 @@ public class Practica02 {
                     break label1;
                 }
             }
-        }
+        }*/
+        
         if (isSymmetric == true) {
             System.out.println("Sí.");
         } else {
@@ -93,7 +107,8 @@ public class Practica02 {
         }
         //end 19:38
     }
-    
+            
+    //sumar dos matrices 3x3
     public static void addTwoTables() {
         //start 19:39
         int[][] myBaseTableA = new int[3][3];
@@ -105,20 +120,14 @@ public class Practica02 {
                 myBaseTableA[i][j] = (int)(Math.random() * ((9 - 0) + 1));
             }
         }
-        System.out.println("Impresión de la primera matriz:");
-        for (int i = 0; i < myBaseTableA.length; i++) {
-            System.out.println(Arrays.toString(myBaseTableA[i]));
-        }
+        printTable(myBaseTableA);
         
         for (int i = 0; i < myBaseTableB.length; i++) {
             for (int j = 0; j < myBaseTableB[i].length; j++) {
                 myBaseTableB[i][j] = (int)(Math.random() * ((9 - 0) + 1));
             }
         }
-        System.out.println("Impresión de la segunda matriz:");
-        for (int i = 0; i < myBaseTableB.length; i++) {
-            System.out.println(Arrays.toString(myBaseTableB[i]));
-        }
+        printTable(myBaseTableB);
         
         System.out.println("Suma de ambas matrices:");
         int[][] myBaseTableC = new int[3][3];
@@ -128,11 +137,10 @@ public class Practica02 {
             }
         }
         //impresión de la tabla final:
-        for (int i = 0; i < myBaseTableC.length; i++) {
-            System.out.println(Arrays.toString(myBaseTableC[i]));
-        }
+        printTable(myBaseTableC);
     }
     
+    //crear matriz 7x7 con 1 en diagonal y 0 en el resto
     public static void createDiagonalTable() {
         //start 19:18
         int[][] myDiagonalTable = new int[7][7];
@@ -145,13 +153,11 @@ public class Practica02 {
                 }
             }
         }
-        System.out.println("Impresión de la tabla " + myDiagonalTable.length + "x" + myDiagonalTable.length + ": ");
-        for (int i = 0; i < myDiagonalTable.length; i++) {
-            System.out.println(Arrays.toString(myDiagonalTable[i]));
-        }
+        printTable(myDiagonalTable);
         //end: 19:25
     }
     
+    //crear matriz 8x6 con 1 en bordes y 0 en resto
     public static void createBasicTable() {
         //start 19:33
         int[][] myBasicTable = new int[8][6];
@@ -164,13 +170,11 @@ public class Practica02 {
                 }
             }
         }
-        System.out.println("Impresión de la tabla " + myBasicTable.length + "x" + myBasicTable[0].length + ": ");
-        for (int i = 0; i < myBasicTable.length; i++) {
-            System.out.println(Arrays.toString(myBasicTable[i]));
-        }
+        printTable(myBasicTable);
         //end: 19:38
     }
     
+    //crear matriz con tamaño según usuario y 1 en bordes y 0 en resto
     public static void createBasicUserTable(Scanner lector) {
         //start 19:38
         System.out.println("Introduce el número de filas:");
@@ -187,10 +191,15 @@ public class Practica02 {
                 }
             }
         }
-        System.out.println("Impresión de la tabla " + userRows + "x" + userColumns + ": ");
-        for (int i = 0; i < userRows; i++) {
-            System.out.println(Arrays.toString(myBasicUserTable[i]));
-        }
+        printTable(myBasicUserTable);
         //end 19:42
+    }
+    
+    public static void printTable(int[][] myTable) {
+	System.out.println("Impresión de la matriz " + myTable.length + "x" + myTable[0].length + ": ");
+        for (int i = 0; i < myTable.length; i++) {
+            System.out.println(Arrays.toString(myTable[i]));
+            //la imprimo así y no con un for que recorra cada elemento interno porque así adopta aspecto de matriz
+        }
     }
 }
